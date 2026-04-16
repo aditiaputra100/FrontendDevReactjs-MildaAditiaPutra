@@ -22,7 +22,7 @@ function RestaurantDetailPage() {
                 const data = await fetchRestaurantById(id)
                 setRestaurant(data)
             } catch (err) {
-                setError("Failed to load restaurant details")
+                setError("Restaurant not found")
             } finally {
                 setLoading(false)
             }
@@ -30,8 +30,25 @@ function RestaurantDetailPage() {
         getRestaurant()
     }, [id])
 
-    if (loading) return <main><p>Loading...</p></main>
-    if (error || !restaurant) return <main><p>{error || "Restaurant not found"}</p></main>
+    if (loading) return (
+        <main 
+            style={{
+                height: '100vh', 
+                display: 'flex', 
+                justifyContent: 'center', 
+                alignItems: 'center'
+            }}>
+            <p>Loading...</p>
+        </main>
+    )
+    if (error || !restaurant) return (
+        <main className="restaurant-detail">
+            <button className="outlined" onClick={() => navigate("/")}>
+                ← Back
+            </button>
+            <p style={{marginTop: '12px'}}>{error || "Restaurant not found"}</p>
+        </main>
+    )
 
     return (
         <main className="restaurant-detail">
@@ -53,8 +70,19 @@ function RestaurantDetailPage() {
                 />
             </section>
 
+            <section className="restaurant-detail-schedule">
+                <h2>Opening Hours</h2>
+                <ul>
+                    {Object.entries(restaurant.schedule).map(([day, { open, close }]) => (
+                        <li key={day}>
+                            <strong>{day}:</strong> {open} - {close}
+                        </li>
+                    ))}
+                </ul>
+            </section>
+
             <section className="restaurant-detail-products">
-                <h2>Products</h2>
+                <h2>Food</h2>
                 <div className="product-items">
                     {restaurant.products && restaurant.products.map((product, index) => (
                         <ProductCard

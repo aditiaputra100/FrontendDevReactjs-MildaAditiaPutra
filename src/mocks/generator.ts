@@ -48,7 +48,7 @@ function generateSchedule(): Schedule {
 
 export const generateMockRestaurants = (count: number): Restaurant[] => {
     return Array.from({length: count}, () => ({
-        id: faker.string.ulid(),
+        id: faker.string.uuid(),
         name: faker.company.name(),
         category: faker.helpers.arrayElement(['Fine Dining', 'Casual Dining', 'Fast Food', 'Cafe', 'Buffet']),
         rating: faker.number.float({min: 1, max: 5, fractionDigits: 1}),

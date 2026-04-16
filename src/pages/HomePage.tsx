@@ -94,6 +94,7 @@ function HomePage() {
                         filteredRestaurants.map((restaurant) => (
                             <RestaurantCard
                                 key={restaurant.id}
+                                id={restaurant.id}
                                 name={restaurant.name}
                                 rating={restaurant.rating}
                                 imageUrl={restaurant.imageUrl}

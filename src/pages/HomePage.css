@@ -74,3 +74,44 @@
     display: flex;
     gap: 4px;
 }
+
+/* ===== RESPONSIVE ===== */
+
+@media (max-width: 768px) {
+    .header-filter {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+    }
+
+    .header-filter-input {
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    .restaurant-items {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .header-filter-input {
+        flex-direction: column;
+        align-items: flex-start;
+        width: 100%;
+    }
+
+    .header-filter-input select {
+        width: 100%;
+    }
+
+    .restaurant-items {
+        grid-template-columns: 1fr;
+    }
+
+    .restaurant-card .restaurant-card-footer {
+        flex-direction: column;
+        gap: 8px;
+    }
+}

@@ -1,9 +1,11 @@
+import { useNavigate } from "react-router-dom"
 import { FaCircle } from "react-icons/fa";
 import type { Schedule } from "../types/restaurant";
 import { getPriceCategory } from "../utils/price";
 import StarRating from "./StarRating";
 
 interface RestaurantCardProps {
+    id: string;
     name: string;
     rating: number;
     imageUrl: string;
@@ -23,7 +25,9 @@ function hhmmToMillis(timeString: string): number {
     return hoursInMillis + minutesInMillis;
 }
 
-function RestaurantCard({ name, rating, imageUrl, category, schedule, priceRange }: RestaurantCardProps) {
+function RestaurantCard({ id, name, rating, imageUrl, category, schedule, priceRange }: RestaurantCardProps) {
+    const navigate = useNavigate()
+    
     const isOpen = () => {
         const currentDate = new Date();
         const currentDay = currentDate.toLocaleString("en-US", { weekday: "long" });
@@ -59,7 +63,7 @@ function RestaurantCard({ name, rating, imageUrl, category, schedule, priceRange
                 </div>
             </div>
             <div className="restaurant-card-action">
-                <button>Learn More</button>
+                <button onClick={() => navigate(`/restaurant/${id}`)}>Learn More</button>
             </div>
         </div>
     )

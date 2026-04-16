@@ -1,0 +1,48 @@
+.restaurant-detail {
+    padding: 24px 0;
+}
+
+.restaurant-detail-header {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 24px 0;
+}
+
+.restaurant-detail-map {
+    margin: 24px 0;
+    height: 400px;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.restaurant-detail-products {
+    margin: 24px 0;
+}
+
+.product-items {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 24px;
+    margin-top: 16px;
+}
+
+@media (max-width: 768px) {
+    .restaurant-detail-map {
+        height: 300px;
+    }
+
+    .product-items {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
+}
+
+@media (max-width: 480px) {
+    .restaurant-detail-map {
+        height: 250px;
+    }
+
+    .product-items {
+        grid-template-columns: 1fr;
+    }
+}

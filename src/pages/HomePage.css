@@ -25,6 +25,9 @@
 
 .restaurant-card {
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
 .restaurant-card .restaurant-card-image {
@@ -35,6 +38,7 @@
 .restaurant-card .restaurant-card-body {
     padding-top: 16px;
     padding-bottom: 16px;
+    flex-grow: 1;
 }
 
 .restaurant-card-image img {

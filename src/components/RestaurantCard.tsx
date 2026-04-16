@@ -1,5 +1,6 @@
 import { FaCircle } from "react-icons/fa";
-import type { PriceRange, Schedule } from "../types/restaurant";
+import type { Schedule } from "../types/restaurant";
+import { getPriceCategory } from "../utils/price";
 import StarRating from "./StarRating";
 
 interface RestaurantCardProps {
@@ -8,10 +9,11 @@ interface RestaurantCardProps {
     imageUrl: string;
     category: string;
     schedule: Schedule;
-    priceRange: PriceRange
+    priceRange: {
+        min: number;
+        max: number;
+    };
 }
-
-type PriceCategory = "$" | "$$" | "$$$" | "$$$$"
 
 function hhmmToMillis(timeString: string): number {
     const [hours, minutes] = timeString.split(":").map(Number);
@@ -19,31 +21,6 @@ function hhmmToMillis(timeString: string): number {
     const minutesInMillis = minutes * 60 * 1000;
 
     return hoursInMillis + minutesInMillis;
-
-}
-
-function getPriceCategory(range: PriceRange): PriceCategory {
-  const { min, max } = range;
-
-  if (min < 0 || max < 0 || max < min) {
-    throw new Error("Invalid price range");
-  }
-
-  const midpoint = (min + max) / 2;
-
-  if (midpoint <= 30000 && max <= 50000) {
-    return "$";
-  }
-
-  if (midpoint <= 75000 && max <= 120000) {
-    return "$$";
-  }
-
-  if (midpoint <= 150000 || max <= 250000) {
-    return "$$$";
-  }
-
-  return "$$$$";
 }
 
 function RestaurantCard({ name, rating, imageUrl, category, schedule, priceRange }: RestaurantCardProps) {

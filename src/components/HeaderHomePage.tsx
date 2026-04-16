@@ -1,8 +1,23 @@
 import { useEffect, useState } from "react";
 import { fetchCategories } from "../services/categories";
 
-function HeaderHomePage() {
-  const [isOpen, setIsOpen] = useState(false)
+interface HeaderHomePageProps {
+  isOpenFilter: boolean;
+  onIsOpenFilterChange: (value: boolean | null) => void;
+  selectedPriceRange: string;
+  onPriceRangeChange: (priceRange: string) => void;
+  selectedCategory: string;
+  onCategoryChange: (category: string) => void;
+}
+
+function HeaderHomePage({
+  isOpenFilter,
+  onIsOpenFilterChange,
+  selectedPriceRange,
+  onPriceRangeChange,
+  selectedCategory,
+  onCategoryChange
+}: HeaderHomePageProps) {
   const [categories, setCategories] = useState<string[]>([])
 
   useEffect(() => {
@@ -19,6 +34,8 @@ function HeaderHomePage() {
     getCategories()
   }, [])
 
+  const isAnyFilterActive = isOpenFilter || selectedPriceRange !== "" || selectedCategory !== ""
+
   return (
     <header className="header-home-page">
       <h1>Restaurants</h1>
@@ -29,15 +46,15 @@ function HeaderHomePage() {
         <div className="header-filter-input">
             <span>Filter By:</span>
             <div className="input-group outlined">
-                <input type="radio" id="status" name="status" checked={isOpen} onClick={() => setIsOpen(!isOpen)} />
+                <input type="radio" id="status" name="status" checked={isOpenFilter} onClick={() => onIsOpenFilterChange(!isOpenFilter)} onChange={() => {}} />
                 <label htmlFor="status">Open Now</label>
             </div>
-            <select className="outlined" name="price" id="price">
+            <select className="outlined" name="price" id="price" value={selectedPriceRange} onChange={(e) => onPriceRangeChange(e.target.value)}>
                 <option value="">Price</option>
                 <option value="min">Min</option>
                 <option value="max">Max</option>
             </select>
-            <select className="outlined" name="categories" id="categories">
+            <select className="outlined" name="categories" id="categories" value={selectedCategory} onChange={(e) => onCategoryChange(e.target.value)}>
                 <option value="">Categories</option>
                 {categories.map((category) => (
                     <option key={category} value={category.toLowerCase()}>{category}</option>
@@ -45,7 +62,17 @@ function HeaderHomePage() {
             </select>
         </div>
         <div>
-            <button className="outlined">Clear All</button>
+            <button 
+              className={`outlined ${!isAnyFilterActive ? "disabled" : ""}`}
+              disabled={!isAnyFilterActive}
+              onClick={() => {
+                onIsOpenFilterChange(null)
+                onPriceRangeChange("")
+                onCategoryChange("")
+              }}
+            >
+              Clear All
+            </button>
         </div>
       </div>
     </header>

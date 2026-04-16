@@ -57,7 +57,11 @@ export const generateMockRestaurants = (count: number): Restaurant[] => {
             max: faker.number.int({min: 51000, max: 200000})
         },
         schedule: generateSchedule(),
-        imageUrl: faker.image.urlLoremFlickr({category: 'food', width: 640, height: 480})
+        imageUrl: faker.image.urlLoremFlickr({category: 'food', width: 640, height: 480}),
+        location: {
+            lat: faker.location.latitude({ min: -8.5, max: -6.0 }),
+            lng: faker.location.longitude({ min: 106.0, max: 112.0 })
+        }
     }))
 }
 
@@ -72,6 +76,9 @@ export const generateMockProducts = (count: number, minPrice: number, maxPrice: 
         rating: faker.number.float({min: 1, max: 5, fractionDigits: 1}),
         description: faker.commerce.productDescription(),
         price: faker.number.int({min: minPrice, max: maxPrice}),
-        imageUrl: faker.image.urlLoremFlickr({category: 'food', width: 640, height: 480})
+        imageUrls: Array.from(
+            { length: faker.number.int({ min: 1, max: 3 }) },
+            () => faker.image.urlLoremFlickr({ category: 'food', width: 640, height: 480 })
+        )
     }))
 }

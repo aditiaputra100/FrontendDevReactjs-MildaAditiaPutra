@@ -11,13 +11,14 @@ export interface Schedule {
 }
 
 export interface Product {
+    id?: string
     name: string
     map: {
         lat: number
         lng: number
     }
     price: number
-    imageUrl: string
+    imageUrls: string[]
     rating: number
     description: string
 }
@@ -30,6 +31,10 @@ export interface Restaurant {
     priceRange: PriceRange
     schedule: Schedule
     imageUrl: string
+    location: {
+        lat: number
+        lng: number
+    }
 }
 
 export interface RestaurantWithProducts extends Restaurant {

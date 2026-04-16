@@ -12,11 +12,10 @@ const renderApp = () => {
 }
 
 async function prepare() {
-  if (import.meta.env.DEV) {
-    const { worker } = await import('./mocks/browser')
-    await worker.start()
-  }
-
+  const { worker } = await import('./mocks/browser')
+  await worker.start({
+    onUnhandledRequest: 'bypass',
+  })
 }
 
 prepare().then(() => renderApp())
